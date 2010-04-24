@@ -1,0 +1,21 @@
+Revision history for DBI-Factory
+
+0.01    2010/04/11
+        First release
+
+0.02    2010/04/18 [API Changed]
+        If you specify an absolute path to the connection info file
+        as "config_file", "config_base" is now always ignored, since
+        this is more intuitive behaviour.
+
+0.03    2010/04/24 [New Feature] [API Changed]
+        You can now invoke "get_dbh" method just like DBI::connect.
+        Thus, you have to specify "dsn" in connection info file,
+        with the prefix of "dbi:".
+
+0.04    2010/04/24
+        Cut down some wastes of codes.
+
+0.05    2010/04/24
+        Fixed a small defection that warns when passing an odd number
+        of elements to get_dbh method during object construction.
