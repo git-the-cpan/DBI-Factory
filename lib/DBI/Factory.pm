@@ -6,7 +6,7 @@ use Scalar::Util qw/ blessed /;
 use Config::Any;
 use DBI;
 
-our $VERSION = "0.05";
+our $VERSION = "0.06";
 
 has "config_base" => (
     is       => "ro",
@@ -223,8 +223,6 @@ you can even pass the args just like when you call L<DBI::connect>.
 
 Bahootyper, C<< <bahootyper at gmail.com> >>
 
-=begin comment
-
 =head1 BUGS
 
 Please report any bugs or feature requests, or funny english found
@@ -233,14 +231,6 @@ or through the web interface at
 L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=DBI-Factory>.
 I will be notified, and then you'll automatically be notified of
 progress on your bug as I make changes.
-
-=head1 TODO
-
-=over 4
-
-=item * uploading to CPAN
-
-=back
 
 =head1 SUPPORT
 
@@ -269,8 +259,6 @@ L<http://cpanratings.perl.org/d/DBI-Factory>
 L<http://search.cpan.org/dist/DBI-Factory/>
 
 =back
-
-=end comment
 
 =head1 LICENSE AND COPYRIGHT
 
