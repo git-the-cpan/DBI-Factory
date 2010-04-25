@@ -6,7 +6,7 @@ use Scalar::Util qw/ blessed /;
 use Config::Any;
 use DBI;
 
-our $VERSION = "0.06";
+our $VERSION = "0.07";
 
 has "config_base" => (
     is       => "ro",

@@ -16,5 +16,6 @@ requires 'DBI';
 test_requires 'Test::More';
 test_requires 'Test::Exception';
 test_requires 'FindBin';
+test_requires 'YAML::XS';
 
 WriteAll;

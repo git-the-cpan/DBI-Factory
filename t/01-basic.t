@@ -9,6 +9,10 @@ use FindBin qw/ $Bin /;
 my ($factory, $dbh);
 $ENV{DBIF_BASE} = undef; # to prevent your env to work
 
+my $not_have_dbd_oracle;
+eval { require DBD::Oracle };
+$not_have_dbd_oracle= 1 if $@;
+
 # invoking as a class method
 
 # the most basic way
@@ -76,25 +80,30 @@ isa_ok( $dbh, "DBI::db" );
 $ENV{DBIF_BASE} = undef;
 $dbh = undef;
 
-# if invoked with an invalid config file but RaiseError is off,
-# it lives, returning undef
-lives_ok {
-    $dbh = DBI::Factory->get_dbh(
-        config_base => "$Bin/conf/conf4",   # RaiseError => 0
-        config_file => "dbm/something_is_wrong.yaml",
-    );
-};
-is($dbh, undef);
+SKIP: {
+    skip "requires DBD::Oracle for connection tests", 4
+        if $not_have_dbd_oracle;
 
-# if invoked with an invalid config file and RaiseError is on,
-# it dies
-dies_ok {
-    $dbh = DBI::Factory->get_dbh(
-        config_base => "$Bin/conf/conf5",   # RaiseError => 1
-        config_file => "dbm/something_is_wrong.yaml",
-    );
+    # if invoked with an invalid config file but RaiseError is off,
+    # it lives, returning undef
+    lives_ok {
+        $dbh = DBI::Factory->get_dbh(
+            config_base => "$Bin/conf/conf4",   # RaiseError => 0
+            config_file => "dbm/something_is_wrong.yaml",
+        );
+    };
+    is($dbh, undef);
+
+    # if invoked with an invalid config file and RaiseError is on,
+    # it dies
+    dies_ok {
+        $dbh = DBI::Factory->get_dbh(
+            config_base => "$Bin/conf/conf5",   # RaiseError => 1
+            config_file => "dbm/something_is_wrong.yaml",
+        );
+    };
+    is($dbh, undef);
 };
-is($dbh, undef);
 
 # seeing if trailing slash in config_base is not harmful
 $dbh = DBI::Factory->get_dbh(
@@ -170,23 +179,28 @@ $dbh = undef;
 $factory = undef;
 $ENV{DBIF_BASE} = undef;
 
-# if invoked with an invalid config file but RaiseError is off,
-# it lives, returning undef
-$factory = DBI::Factory->new("$Bin/conf/conf4");    # RaiseError => 0
-lives_ok {
-    $dbh = $factory->get_dbh("dbm/something_is_wrong.yaml");
-};
-is($dbh, undef);
-$factory = undef;
+SKIP: {
+    skip "requires DBD::Oracle for connection tests", 4
+        if $not_have_dbd_oracle;
 
-# if invoked with an invalid config file and RaiseError is on,
-# it dies
-$factory = DBI::Factory->new("$Bin/conf/conf5");    # RaiseError => 1
-dies_ok {
-    $dbh = DBI::Factory->get_dbh("dbm/something_is_wrong.yaml");
+    # if invoked with an invalid config file but RaiseError is off,
+    # it lives, returning undef
+    $factory = DBI::Factory->new("$Bin/conf/conf4");    # RaiseError => 0
+    lives_ok {
+        $dbh = $factory->get_dbh("dbm/something_is_wrong.yaml");
+    };
+    is($dbh, undef);
+    $factory = undef;
+
+    # if invoked with an invalid config file and RaiseError is on,
+    # it dies
+    $factory = DBI::Factory->new("$Bin/conf/conf5");    # RaiseError => 1
+    dies_ok {
+        $dbh = DBI::Factory->get_dbh("dbm/something_is_wrong.yaml");
+    };
+    is($dbh, undef);
+    $factory = undef;
 };
-is($dbh, undef);
-$factory = undef;
 
 # without "config_file", get_dbh takes args just like DBI->connect
 $factory = DBI::Factory->new;

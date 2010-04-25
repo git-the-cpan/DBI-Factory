@@ -8,6 +8,7 @@ build_requires:
   FindBin: 0
   Test::Exception: 0
   Test::More: 0
+  YAML::XS: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.42
 distribution_type: module
@@ -29,4 +30,4 @@ requires:
   namespace::autoclean: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.06
+version: 0.07

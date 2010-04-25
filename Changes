@@ -19,3 +19,13 @@ Revision history for DBI-Factory
 0.05    2010/04/24
         Fixed a small defection that warns when passing an odd number
         of elements to get_dbh method during object construction.
+
+0.06    2010/04/24
+        Fixed documentation.
+
+0.07    2010/04/25
+        Fixed some bugs in tests that prevent you from installing this module
+        when DBD::Oracle is not installed on your machine.
+        Besides, since almost all tests requires YAML* modules,
+        added YAML::XS for testing requirement, because Config::Any complains
+        at YAML or YAML::Syck about their deprecation.
